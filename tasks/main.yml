@@ -1,0 +1,25 @@
+---
+- name: Install Node
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - nodejs
+    - npm
+
+- name: Create symlink for node
+  file:
+    src: /usr/bin/nodejs
+    dest: /usr/bin/node
+    state: link
+
+- name: Update npm
+  command: "npm update -g npm"
+  args:
+    creates: /usr/local/bin/npm
+
+- name: Install node-sass
+  npm:
+    name: node-sass
+    state: present
+    global: yes
